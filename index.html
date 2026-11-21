@@ -105,6 +105,19 @@ select{background:var(--panel);border:1px solid var(--line);color:var(--ink);bor
 .method{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .method ul{margin:8px 0 0;padding-left:18px;color:#c3c8d3;font-size:14.5px}
 .foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+/* strength card */
+.sc{background:linear-gradient(145deg,#1d2333,#121722);border:1px solid #3a3220;border-radius:16px;padding:18px 20px;display:grid;gap:14px}
+.sc-top{display:flex;gap:18px;align-items:center}
+.sc-ovr{flex:none;width:86px;height:86px;border-radius:14px;background:linear-gradient(160deg,#f6d77a,#b9861c);color:#1a1408;display:grid;place-content:center;text-align:center}
+.sc-ovr b{font-family:var(--display);font-size:36px;line-height:1}.sc-ovr span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.sc-title{font-family:var(--display);font-size:24px;font-weight:800;color:var(--gold2)}
+.sc-line{color:#c3c8d3;font-size:14px;max-width:60ch}
+.sc-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 18px}
+@media (max-width:640px){.sc-bars{grid-template-columns:1fr 1fr}.sc-top{align-items:flex-start}}
+.sb-h{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
+.sb-t{height:7px;border-radius:99px;background:#262d3d;margin:5px 0 3px;overflow:hidden}.sb-t i{display:block;height:100%;border-radius:99px;background:var(--up)}
+.sb-x{font-size:11.5px;color:var(--mut)}
+.sc-note{font-size:11.5px;color:var(--mut)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -173,6 +186,34 @@ const $ = s => document.querySelector(s);
 const f = () => st.risk / 0.5;
 const money = (v, sign=true) => { const a = Math.abs(v); const s = v < 0 ? '−' : (sign ? '+' : ''); return a >= 1e6 ? `${s}$${(a/1e6).toFixed(2)}M` : a >= 1000 ? `${s}$${(a/1e3).toFixed(1)}k` : `${s}$${a.toFixed(0)}`; };
 const stars = n => '★'.repeat(n) + `<i>${'★'.repeat(5-n)}</i>`;
+// ---- strength card: each stat is a 0-100 rank against the other 41 profiles
+const rank = (key, inv=false) => { const v = P.map(p=>p[key]); return p => { const x = p[key]; const below = v.filter(y => inv ? y < x : y < x).length; const r = below/(v.length-1)*100; return Math.round(inv ? 100 - r : r); }; };
+const R = { power: rank('net'), management: rank('dd'), consistency: p=>Math.round(P.filter(q=>q.green/q.months < p.green/p.months).length/(P.length-1)*100),
+  precision: rank('win'), efficiency: rank('pf'), resilience: p=>Math.round(P.filter(q=>q.lossStreak > p.lossStreak).length/(P.length-1)*100) };
+const STATS = [['power','Power','How much it makes'],['management','Risk control','How shallow its dips stay'],['consistency','Consistency','How many months end green'],
+  ['precision','Precision','How often a trade wins'],['efficiency','Efficiency','Dollars won per dollar lost'],['resilience','Resilience','How short its losing runs are']];
+const ARCH = {power:['The Powerhouse','Built to compound hard in strong gold trends. Biggest upside, deepest dips: pair it with a lower risk.'],
+  management:['The Guardian','Specialises in protecting capital. Small dips, steady climb: the profile for prop accounts and calm nerves.'],
+  consistency:['The Grinder','Specialises in showing up every month. Fewer heroics, more green months in a row.'],
+  precision:['The Sniper','Specialises in hit rate. Takes fewer, cleaner shots and wins most of them.'],
+  efficiency:['The Strategist','Specialises in reward per risk. Every dollar lost brings back more than most.'],
+  resilience:['The Survivor','Specialises in bouncing back. Short losing runs and quick recoveries.']};
+function strength(p){
+  const sc = Object.fromEntries(STATS.map(([k])=>[k, R[k](p)]));
+  let top = STATS.map(s=>s[0]).sort((a,b)=>sc[b]-sc[a])[0];
+  let [title, line] = ARCH[top];
+  if (p.ea==='Counter') { title='The Chameleon'; line='Specialises in reading the day: half size when the trend is weak, an extra trade only when it is strong.'; }
+  const ovr = Math.round(STATS.reduce((a,[k])=>a+sc[k],0)/STATS.length*0.6 + 40);
+  return {sc, title, line, ovr};
+}
+function strengthCard(p){
+  const s = strength(p);
+  return `<div class="sc"><div class="sc-top"><div class="sc-ovr"><b>${s.ovr}</b><span>overall</span></div>
+    <div><div class="eyebrow">Strength card · specialises in</div><div class="sc-title">${s.title}</div><div class="sc-line">${s.line}</div></div></div>
+    <div class="sc-bars">${STATS.map(([k,l,h])=>`<div class="sb"><div class="sb-h"><span>${l}</span><b class="num">${s.sc[k]}</b></div>
+      <div class="sb-t"><i style="width:${Math.max(4,s.sc[k])}%;${s.sc[k]>=80?'background:linear-gradient(90deg,#e3b341,#f6d77a)':''}"></i></div><div class="sb-x">${h}</div></div>`).join('')}</div>
+    <div class="sc-note">Each bar ranks this profile against all 42 (100 = best of them).</div></div>`;
+}
 const save = () => { try { localStorage.setItem('gp-state', JSON.stringify(st)); } catch(e) {} };
 
 function kpis(){
@@ -260,6 +301,7 @@ function detail(){
     ['Worst month',money(p.worstMo*k),`worst day ${money(p.worstDay*k)}`,'down'],['Recovery',`${p.recov.toFixed(1)}×`,'net ÷ worst drop','']];
   $('#detail').innerHTML = `<div class="dh"><div><div class="eyebrow">${p.ea==='Counter'?'Prime EA · counter profile':p.ea+' EA'}</div><h3>${p.name}</h3><div class="desc">${p.desc}</div></div>
      <div style="text-align:right"><div class="mut small">Risk level</div><div class="stars" style="font-size:20px">${stars(p.stars)}</div></div></div>
+   ${strengthCard(p)}
    <div class="tiles">${T.map(([a,b,c,cl])=>`<div class="tile"><div class="k">${a}</div><div class="v ${cl}">${b}</div><div class="x">${c}</div></div>`).join('')}</div>
    ${equity(p)}${heat(p)}
    <p class="small"><b>Small details:</b> average win ${money(p.avgWin*k)} against average loss ${money(p.avgLoss*k)} · biggest single loss ${money(p.maxLoss*k)}, never more than one stop · median trade held ${p.hold} h · ${p.perWeek} trades a week · ${p.greenDays}% of trading days green · best day ${money(p.bestDay*k)} · longest winning streak ${p.winStreak}, longest losing streak ${p.lossStreak} · buys ${lw.toFixed(0)}% of profit, sells ${(100-lw).toFixed(0)}%.
