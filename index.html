@@ -241,8 +241,8 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
 .cr-text h2 span{background:linear-gradient(100deg,#fff3c0,#e8b84a 60%,#ffe39a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .cr-lines{display:grid;gap:6px;color:#c9cdd8;font-size:15.5px;margin:14px 0}
 .cr-lines span{opacity:0;transform:translateY(8px);transition:opacity .7s,transform .7s}
-.creator.seen .cr-lines span{opacity:1;transform:none}
-.creator.seen .cr-lines span:nth-child(2){transition-delay:.35s}.creator.seen .cr-lines span:nth-child(3){transition-delay:.7s}
+.creator.cr-in .cr-lines span{opacity:1;transform:none}
+.creator.cr-in .cr-lines span:nth-child(2){transition-delay:.35s}.creator.cr-in .cr-lines span:nth-child(3){transition-delay:.7s}
 .cr-lines b{color:var(--gold2);font-weight:600}
 .cr-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cr-facts div{border-top:1px solid rgba(232,184,74,.35);padding-top:6px}
@@ -259,6 +259,50 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
 .visits.on{display:flex;animation:rise .5s}
 .visits svg{width:16px;height:16px}
 .visits b{font-family:var(--mono);color:var(--gold2);font-size:13px}
+.risk.bal input{width:120px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--gold2);border-radius:10px;padding:7px 10px;font:600 14px var(--mono);text-align:right}
+.risk.bal input:focus{outline:2px solid var(--gold);outline-offset:1px}
+
+/* ladder of success */
+.climbstat{min-width:240px;text-align:right}
+.climbstat b{font-size:44px;color:var(--gold2);line-height:1}
+.climbstat span{display:block;color:var(--mut);font-size:13px}
+.climbstat .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.08);margin-top:8px;overflow:hidden}
+.climbstat .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));box-shadow:0 0 12px var(--gold)}
+.ladder{position:relative;display:grid;gap:0;padding:10px 0 20px}
+.ladder .rails{position:absolute;top:0;bottom:0;left:calc(50% - 54px);width:108px;border-left:5px solid #3a3150;border-right:5px solid #3a3150;border-radius:4px;pointer-events:none}
+.ladder .rails .fill{position:absolute;left:-5px;right:-5px;bottom:0;height:calc(var(--prog) * 100%);border-left:5px solid var(--gold);border-right:5px solid var(--gold);
+  box-shadow:-6px 0 18px -6px var(--gold),6px 0 18px -6px var(--gold);transform-origin:bottom;transform:scaleY(0);transition:transform 2.4s cubic-bezier(.3,.7,.2,1)}
+.ladder.go .rails .fill{transform:scaleY(1)}
+.rung{display:grid;grid-template-columns:1fr 108px 1fr;align-items:center;min-height:118px;position:relative}
+.rung .rmid{position:relative;height:100%;display:grid;place-items:center}
+.rung .bar{position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;background:#3a3150;border-radius:3px}
+.rung .node{position:relative;z-index:1;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:700;background:#14112a;border:2px solid #3a3150;color:var(--mut)}
+.rung .rcard{grid-column:1;justify-self:end;max-width:420px;margin-right:18px;padding:14px 18px;border-radius:16px;background:rgba(16,20,38,.85);border:1px solid var(--line);text-align:right;
+  opacity:.35;transform:translateY(10px);transition:opacity .6s,transform .6s,border-color .6s;transition-delay:calc(var(--i) * .18s)}
+.rung.r .rcard{grid-column:3;justify-self:start;margin:0 0 0 18px;text-align:left}
+.rung.r .rmid{grid-column:2;grid-row:1}.rung.r .rspace{grid-column:1;grid-row:1}
+.rung .rno{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.rung h3{font-size:20px;color:var(--parch);margin:4px 0 4px}
+.rung p{margin:0;color:#c3c7d3;font-size:14px}
+.ladder.go .rung .rcard{opacity:1;transform:none}
+.ladder.go .rung.next .rcard{opacity:.55;border-style:dashed}
+.rung.done .bar,.rung.now .bar{transition:background .5s,box-shadow .5s;transition-delay:calc(var(--i) * .18s)}
+.ladder.go .rung.done .bar{background:var(--gold);box-shadow:0 0 14px rgba(232,184,74,.7)}
+.ladder.go .rung.done .node{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;border-color:var(--gold2);transition:all .5s calc(var(--i) * .18s)}
+.ladder.go .rung.done .rcard{border-color:rgba(232,184,74,.35)}
+.rung.now .node{border-color:var(--gold2);color:var(--gold2);box-shadow:0 0 0 0 rgba(232,184,74,.6);animation:pulseN 1.8s infinite}
+.ladder.go .rung.now .rcard{border-color:var(--gold2);box-shadow:0 0 30px rgba(232,184,74,.18)}
+.rung.now .rno{color:var(--gold2)}
+.ladder.go .rung.now .bar{background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+@keyframes pulseN{0%{box-shadow:0 0 0 0 rgba(232,184,74,.6)}70%{box-shadow:0 0 0 16px rgba(232,184,74,0)}100%{box-shadow:0 0 0 0 rgba(232,184,74,0)}}
+.climber{position:absolute;z-index:2;width:34px;height:50px;left:calc(50% + 24px);top:calc(50% - 56px);opacity:0;transform:translateY(60px);transition:opacity .6s 2.2s,transform 1s 2.2s}
+.ladder.go .climber{opacity:1;transform:none;animation:bob 2.4s 3.2s ease-in-out infinite}
+.climber svg{width:100%;height:100%;filter:drop-shadow(0 0 8px rgba(232,184,74,.6))}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.ladder .rails .fill,.rung .rcard,.climber{transition:none}.rung.now .node,.ladder.go .climber{animation:none}}
+.creator.first{margin-top:10px}
+.cr-play{place-content:end center;padding-bottom:20px;background:linear-gradient(0deg,rgba(0,0,0,.75),rgba(0,0,0,0) 45%),var(--crp) center/cover}
+.cr-play span{width:60px;height:60px;font-size:22px}
 
 /* ---------------- MOBILE LAYER (phones: max-width 760px) ---------------- */
 .bnav,.mfilter,.reels{display:none}
@@ -370,6 +414,18 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
 }
 @media (max-width:760px){.creator{margin-top:26px;border-radius:16px}.cr-play span{width:64px;height:64px;font-size:24px}.cr-facts b{font-size:18px}.cr-lines{font-size:14.5px}}
 @media (max-width:760px){.visits{bottom:calc(80px + env(safe-area-inset-bottom,0px));padding:5px 10px 5px 8px;font-size:11px}}
+@media (max-width:760px){
+  .climbstat{min-width:0;text-align:left}.climbstat b{font-size:34px}
+  .ladder .rails{left:8px;width:56px}
+  .rung{grid-template-columns:72px 1fr;min-height:0;padding:8px 0}
+  .rung .rmid,.rung.r .rmid{grid-column:1;grid-row:1;min-height:96px}
+  .rung .rcard,.rung.r .rcard{grid-column:2;grid-row:1;justify-self:stretch;max-width:none;margin:0 0 0 6px;text-align:left;padding:12px 14px}
+  .rung .rspace{display:none}
+  .rung .bar{left:8px;right:auto;width:56px}
+  .rung .node{width:34px;height:34px;font-size:15px;margin-left:-0px}
+  .rung h3{font-size:17px}.rung p{font-size:13.5px}
+  .climber{left:auto;right:-10px;width:26px;height:40px;top:calc(50% - 44px)}
+}
 </style></head><body>
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -395,7 +451,7 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
       <div class="sub">42 spells. One storeroom wizard. Two beasts.</div>
       <p class="lead">Every Gold Profiles setting is a spell. Collect them as cards, from Basic to Ultimate, read their real test results, cast them, and make them duel. Then watch the season where each one is learned.</p>
       <div class="stats" id="hstats"></div>
-      <div class="ctas"><a class="btn gold" href="#spellbook">✦ Open the Spellbook</a><a class="btn ghost" href="#season">▶ Watch Season 1</a><a class="btn ghost" href="#duel">⚔ Start a Duel</a><a class="btn ghost" href="#home" id="toCreator">☉ Meet the creator</a></div>
+      <div class="ctas"><a class="btn gold" href="#spellbook">✦ Open the Spellbook</a><a class="btn ghost" href="#season">▶ Watch Season 1</a><a class="btn ghost" href="#duel">⚔ Start a Duel</a><a class="btn ghost" href="#academy" id="toCreator">☉ Meet the creator</a></div>
     </div>
     <div class="eyesbox">
       <div class="eyebrow">Spell of the moment</div>
@@ -404,19 +460,6 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
     </div>
   </div>
   <div class="ticker"><div class="run" id="ticker"></div></div>
-  <section class="creator" id="creator" aria-labelledby="creatorH">
-    <div class="cr-film">
-      <video id="crVid" controls playsinline preload="none"></video>
-      <button class="cr-play" id="crPlay" aria-label="Play the creator's story"><span>▶</span><em>Watch his story · 1:25</em></button>
-    </div>
-    <div class="cr-text">
-      <div class="eyebrow">The creator</div>
-      <h2 id="creatorH">Not a trader.<br><span>A creative mind.</span></h2>
-      <p class="cr-lines"><span>Where others read charts, he reads the numbers.</span><span>Indicator after indicator. Built. Broken. Rebuilt.</span><span>Until <b>mathematics made the call</b>.</span></p>
-      <div class="cr-facts"><div><b class="num">847,000</b><span>combinations put on trial</span></div><div><b class="num">42</b><span>survived as spells</span></div><div><b class="num">0</b><span>trades without a stop</span></div></div>
-      <div class="cr-sig">— SSXDE_Dler <small>coder · creator of Gold Profiles</small></div>
-    </div>
-  </section>
 </div>
 
 <!-- SPELLBOOK -->
@@ -431,9 +474,10 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
       <select id="sortSel"><option value="order">Spell number</option><option value="net">Most profit</option><option value="dd">Smallest dip</option><option value="pf">Profit factor</option><option value="win">Win rate</option><option value="ovr">Overall power</option></select>
       <input type="search" id="q" placeholder="Search a spell…" aria-label="Search spells">
       <div class="risk"><label for="riskIn">Risk</label><input id="riskIn" type="range" min="0.1" max="2" step="0.05" value="0.5"><b class="num" id="riskOut">0.50%</b></div>
+      <div class="risk bal"><label for="balIn">Balance $</label><input id="balIn" class="balIn" type="text" inputmode="numeric" value="100,000" aria-label="Account balance in dollars"></div>
     </div>
     <div class="grid" id="grid"></div>
-    <p class="mut small" style="margin-top:14px">Hover a card to see it shimmer, right-click or long-press to flip it, click to open it. Figures scale in a straight line with the risk slider (no compounding).</p>
+    <p class="mut small" style="margin-top:14px">Hover a card to see it shimmer, right-click or long-press to flip it, click to open it. Type any balance (e.g. 500, 10k, 1m); every figure scales in a straight line with balance and risk (no compounding).</p>
   </section>
 </div>
 
@@ -468,6 +512,25 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
 
 <!-- ACADEMY -->
 <div class="view" id="v-academy">
+  <section class="creator first" id="creator" aria-labelledby="creatorH">
+    <div class="cr-film">
+      <video id="crVid" controls playsinline preload="none"></video>
+      <button class="cr-play" id="crPlay" aria-label="Play the creator's story"><span>▶</span><em>Watch his story · 1:25</em></button>
+    </div>
+    <div class="cr-text">
+      <div class="eyebrow">The creator</div>
+      <h2 id="creatorH">Not a trader.<br><span>A creative mind.</span></h2>
+      <p class="cr-lines"><span>Where others read charts, he reads the numbers.</span><span>Indicator after indicator. Built. Broken. Rebuilt.</span><span>Until <b>mathematics made the call</b>.</span></p>
+      <div class="cr-facts"><div><b class="num">847,000</b><span>combinations put on trial</span></div><div><b class="num">42</b><span>survived as spells</span></div><div><b class="num">0</b><span>trades without a stop</span></div></div>
+      <div class="cr-sig">— SSXDE_Dler <small>coder · creator of Gold Profiles</small></div>
+    </div>
+  </section>
+  <section class="climb">
+    <div class="sh"><div><div class="eyebrow">The ladder of success</div><h2>How far we've climbed</h2></div>
+      <div class="climbstat"><b class="num" id="rungN">0</b><span>of <i id="rungT">12</i> rungs climbed</span><div class="bar"><i id="rungBar"></i></div></div></div>
+    <p class="mut" style="max-width:720px;margin:-6px 0 18px">From one question to a live product. Every rung below is done; the glowing one is where we stand today; the ones above are next.</p>
+    <div class="ladder" id="ladder"></div>
+  </section>
   <section>
     <div class="sh"><div><div class="eyebrow">The Academy</div><h2>How a spell is cast</h2></div></div>
     <div class="scrolls">
@@ -501,9 +564,12 @@ const RC = ['', '#7f9bc4', '#46c28c', '#a777ff', '#ff9a3c', '#ffd76a'];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store = { get(k, d) { try { const v = localStorage.getItem('nm-' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
                 set(k, v) { try { localStorage.setItem('nm-' + k, JSON.stringify(v)); } catch (e) {} } };
-let st = Object.assign({ ea: 'all', r: 0, sort: 'order', risk: 0.5, q: '' }, store.get('st', {}));
+let st = Object.assign({ ea: 'all', r: 0, sort: 'order', risk: 0.5, q: '', bal: 100000 }, store.get('st', {}));
 let studied = new Set(store.get('studied', []));
-const f = () => st.risk / 0.5;
+const f = () => st.risk / 0.5;                       // percent figures scale with risk
+const fm = () => st.risk / 0.5 * st.bal / 100000;    // dollar figures scale with risk and balance
+const BAL = () => st.bal;
+const kfmt = v => Math.abs(v) >= 1e6 ? '$' + (v / 1e6).toFixed(2) + 'M' : Math.abs(v) >= 1e4 ? '$' + Math.round(v / 1000) + 'k' : Math.abs(v) >= 1000 ? '$' + (v / 1000).toFixed(1) + 'k' : '$' + Math.round(v);
 const money = (v, sign = true) => { const a = Math.abs(v), s = v < 0 ? '−' : (sign ? '+' : ''); return a >= 1e6 ? `${s}$${(a / 1e6).toFixed(2)}M` : a >= 1000 ? `${s}$${(a / 1e3).toFixed(1)}k` : `${s}$${a.toFixed(0)}`; };
 const starsH = n => '★'.repeat(n) + `<i>${'★'.repeat(5 - n)}</i>`;
 
@@ -561,19 +627,19 @@ function art(p) {
   return `<svg viewBox="-10 -10 120 120" aria-hidden="true"><defs><radialGradient id="${g}" cx="40%" cy="35%"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="${c}"/><stop offset="1" stop-color="#1a1408"/></radialGradient></defs>${rays}${shapes[p.icon]}</svg>`;
 }
 function card(p, opts = {}) {
-  const k = f(), done = studied.has(p.id);
+  const k = f(), km = fm(), done = studied.has(p.id);
   return `<div class="card r${p.stars}${opts.flip ? ' flip' : ''}" data-r="${p.stars}" data-id="${p.id}" tabindex="0" role="button" aria-label="${p.spell}, ${RANK[p.stars]} spell, ${p.name}">
   <div class="in"><div class="face front"><div class="holo"></div>
     <div class="c-top"><span class="c-rank">${RANK[p.stars]}</span><span class="c-no">#${String(p.no).padStart(2, '0')}</span></div>
     ${p.ep ? `<span class="seen">EP ${p.ep}</span>` : ''}
     <div class="c-art">${art(p)}</div>
     <div class="c-name">${p.spell}</div><div class="c-type">${p.name.toUpperCase()} · ${p.arch.toUpperCase()}</div>
-    <div class="c-stats"><div><b class="up">${money(p.net * k).replace('+', '')}</b><span>gain</span></div><div><b class="down">${(p.dd * k).toFixed(1)}%</b><span>dip</span></div><div><b>${p.ovr}</b><span>power</span></div></div>
+    <div class="c-stats"><div><b class="up">${money(p.net * km).replace('+', '')}</b><span>gain</span></div><div><b class="down">${(p.dd * k).toFixed(1)}%</b><span>dip</span></div><div><b>${p.ovr}</b><span>power</span></div></div>
   </div><div class="face back"><div class="holo"></div>
     <h4>${p.spell}</h4><div class="stars" style="font-size:12px">${starsH(p.stars)}</div>
     <div class="row"><span>Profit factor</span><b>${p.pf.toFixed(2)}</b></div><div class="row"><span>Win rate</span><b>${p.win.toFixed(0)}%</b></div>
     <div class="row"><span>Green months</span><b>${p.green}/${p.months}</b></div><div class="row"><span>Trades</span><b>${p.n.toLocaleString()}</b></div>
-    <div class="row"><span>Worst month</span><b>${money(p.worstMo * k)}</b></div><div class="row"><span>Learned in</span><b>${p.ep ? 'Ep ' + p.ep : '—'}</b></div>
+    <div class="row"><span>Worst month</span><b>${money(p.worstMo * km)}</b></div><div class="row"><span>Learned in</span><b>${p.ep ? 'Ep ' + p.ep : '—'}</b></div>
     <div class="lore">“${p.lore}”${done ? '<br><span style="color:var(--gold2);font-style:normal">✓ studied</span>' : ''}</div>
   </div></div></div>`;
 }
@@ -696,16 +762,16 @@ function book() {
   if (!reduce) $$('#grid .card').forEach((c, i) => { c.style.opacity = 0; c.style.transform = 'translateY(16px)'; setTimeout(() => { c.style.transition = 'opacity .5s, transform .5s'; c.style.opacity = 1; c.style.transform = ''; }, 30 * i); });
 }
 function equity(p) {
-  const W = 820, H = 300, pl = 58, pr = 14, pt = 14, pb = 26, dh = 70, k = f();
-  const eq = p.eq.map(v => 100000 + (v - 100000) * k), mn = Math.min(100000, ...eq), mx = Math.max(...eq);
+  const W = 820, H = 300, pl = 58, pr = 14, pt = 14, pb = 26, dh = 70, k = fm(), B0 = BAL();
+  const eq = p.eq.map(v => B0 + (v - 100000) * k), mn = Math.min(B0, ...eq), mx = Math.max(...eq);
   const X = i => pl + i / (eq.length - 1) * (W - pl - pr), Y = v => pt + (1 - (v - mn) / (mx - mn)) * (H - pt - pb - dh - 10);
   let pk = -Infinity; const dd = eq.map(v => { pk = Math.max(pk, v); return (v - pk) / pk * 100; }); const dmin = Math.min(...dd, -.1); const DY = v => H - pb - dh + (v / dmin) * dh;
   const line = eq.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
   const step = Math.pow(10, Math.floor(Math.log10((mx - mn) / 4))), s2 = Math.ceil((mx - mn) / 4 / step) * step, ticks = []; for (let v = Math.ceil(mn / s2) * s2; v <= mx; v += s2) ticks.push(v);
   const c = RC[p.stars];
   return `<div class="chart" id="eqc"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Balance curve of ${p.spell}"><defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".35"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs>
-   ${ticks.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#222a40"/><text x="${pl - 8}" y="${Y(v) + 4}" fill="#8f97ab" font-size="11" text-anchor="end" font-family="JetBrains Mono">$${Math.round(v / 1000)}k</text>`).join('')}
-   <line x1="${pl}" x2="${W - pr}" y1="${Y(100000)}" y2="${Y(100000)}" stroke="#8f97ab" stroke-dasharray="3 4"/>
+   ${ticks.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#222a40"/><text x="${pl - 8}" y="${Y(v) + 4}" fill="#8f97ab" font-size="11" text-anchor="end" font-family="JetBrains Mono">${kfmt(v)}</text>`).join('')}
+   <line x1="${pl}" x2="${W - pr}" y1="${Y(B0)}" y2="${Y(B0)}" stroke="#8f97ab" stroke-dasharray="3 4"/>
    <polygon points="${X(0)},${Y(mn)} ${line} ${X(eq.length - 1)},${Y(mn)}" fill="url(#ga)"/><polyline points="${line}" fill="none" stroke="${c}" stroke-width="2.4" ${reduce ? '' : 'class="draw"'} pathLength="1"/>
    <circle cx="${X(eq.length - 1)}" cy="${Y(eq[eq.length - 1])}" r="5" fill="#fff" stroke="${c}" stroke-width="3"/>
    <text x="${W - pr}" y="${H - pb - dh + 14}" fill="#8f97ab" font-size="11" text-anchor="end">drop from peak</text>
@@ -715,8 +781,8 @@ function equity(p) {
    <line id="cx" x1="0" x2="0" y1="${pt}" y2="${H - pb}" stroke="#ece6d6" stroke-opacity=".35" visibility="hidden"/></svg><div class="tip" id="tip" hidden></div></div>`;
 }
 function hookTip(p) {
-  const svg = $('#eqc svg'), tip = $('#tip'), cx = $('#cx'); if (!svg) return; const k = f();
-  const eq = p.eq.map(v => 100000 + (v - 100000) * k); let pk = -Infinity; const dd = eq.map(v => { pk = Math.max(pk, v); return (v - pk) / pk * 100; });
+  const svg = $('#eqc svg'), tip = $('#tip'), cx = $('#cx'); if (!svg) return; const k = fm(), B0 = BAL();
+  const eq = p.eq.map(v => B0 + (v - 100000) * k); let pk = -Infinity; const dd = eq.map(v => { pk = Math.max(pk, v); return (v - pk) / pk * 100; });
   svg.addEventListener('pointermove', e => { const r = svg.getBoundingClientRect(), sx_ = (e.clientX - r.left) / r.width * 820, i = Math.max(0, Math.min(eq.length - 1, Math.round((sx_ - 58) / (820 - 72) * (eq.length - 1))));
     const x = 58 + i / (eq.length - 1) * (820 - 72); cx.setAttribute('x1', x); cx.setAttribute('x2', x); cx.setAttribute('visibility', 'visible'); tip.hidden = false;
     tip.innerHTML = `trade ~${Math.round(i / (eq.length - 1) * p.n).toLocaleString()}<br>balance $${Math.round(eq[i]).toLocaleString()}<br><span style="color:#ef6a62">drop ${dd[i].toFixed(1)}%</span>`;
@@ -724,31 +790,32 @@ function hookTip(p) {
   svg.addEventListener('pointerleave', () => { tip.hidden = true; cx.setAttribute('visibility', 'hidden'); });
 }
 function heat(p) {
-  const k = f(), by = {}; p.mo.forEach(([i, v]) => by[i] = v * k); const idx = p.mo.map(m => m[0]), y0 = Math.floor(Math.min(...idx) / 12), y1 = Math.floor(Math.max(...idx) / 12);
+  const k = fm(), by = {}; p.mo.forEach(([i, v]) => by[i] = v * k); const idx = p.mo.map(m => m[0]), y0 = Math.floor(Math.min(...idx) / 12), y1 = Math.floor(Math.max(...idx) / 12);
   const mx = Math.max(...Object.values(by).map(Math.abs), 1), last = Math.max(...idx);
   let h = `<table><tr><th></th>${MN.map(m => `<th>${m}</th>`).join('')}<th>Year</th></tr>`;
   for (let y = y0; y <= y1; y++) { let t = 0; h += `<tr><td class="yl">Year ${y - y0 + 1}</td>`;
     for (let m = 0; m < 12; m++) { const i = y * 12 + m; if (!(i in by)) { h += '<td class="na"></td>'; continue; } const v = by[i]; t += v; const a = (.18 + .65 * Math.min(1, Math.abs(v) / mx)).toFixed(2);
       h += `<td style="background:${v > 0 ? `rgba(53,196,143,${a})` : v < 0 ? `rgba(239,106,98,${a})` : '#1a2030'}" title="${money(v)}">${money(v, false)}${i === last ? '*' : ''}</td>`; }
     h += `<td class="tot ${t >= 0 ? 'up' : 'down'}">${money(t)}</td></tr>`; }
-  return `<div class="heat">${h}</table></div><div class="mut small" style="margin-top:6px">Profit per month at ${st.risk.toFixed(2)}% risk. * last month part-tested.</div>`;
+  return `<div class="heat">${h}</table></div><div class="mut small" style="margin-top:6px">Profit per month on ${money(BAL(), false)} at ${st.risk.toFixed(2)}% risk. * last month part-tested.</div>`;
 }
 function spell(id, quiet) {
   const p = byId(id); if (!p) { location.hash = 'spellbook'; return; }
   if (!studied.has(id)) { studied.add(id); store.set('studied', [...studied]); }
-  const k = f(), i = P.indexOf(p), prev = P[(i + P.length - 1) % P.length], next = P[(i + 1) % P.length], lw = p.long / (p.long + p.short) * 100;
-  const T = [['Net profit', money(p.net * k), `${(p.net * k / 1000).toFixed(0)}% on $100k`, 'up'], ['Worst drop', `${(p.dd * k).toFixed(1)}%`, 'from any peak', 'down'], ['Profit factor', p.pf.toFixed(2), 'won $ ÷ lost $', ''], ['Win rate', `${p.win.toFixed(0)}%`, `${p.n.toLocaleString()} trades`, ''],
-    ['Green months', `${p.green}/${p.months}`, `longest run ${p.greenRun}`, ''], ['Average month', money(p.avgMo * k), `best ${money(p.bestMo * k)}`, 'up'], ['Worst month', money(p.worstMo * k), `worst day ${money(p.worstDay * k)}`, 'down'], ['Recovery', `${p.recov.toFixed(1)}×`, 'net ÷ worst drop', '']];
+  const k = f(), km = fm(), i = P.indexOf(p), prev = P[(i + P.length - 1) % P.length], next = P[(i + 1) % P.length], lw = p.long / (p.long + p.short) * 100;
+  const T = [['Net profit', money(p.net * km), `${(p.net * k / 1000).toFixed(0)}% on ${money(BAL(), false)}`, 'up'], ['Worst drop', `${(p.dd * k).toFixed(1)}%`, 'from any peak', 'down'], ['Profit factor', p.pf.toFixed(2), 'won $ ÷ lost $', ''], ['Win rate', `${p.win.toFixed(0)}%`, `${p.n.toLocaleString()} trades`, ''],
+    ['Green months', `${p.green}/${p.months}`, `longest run ${p.greenRun}`, ''], ['Average month', money(p.avgMo * km), `best ${money(p.bestMo * km)}`, 'up'], ['Worst month', money(p.worstMo * km), `worst day ${money(p.worstDay * km)}`, 'down'], ['Recovery', `${p.recov.toFixed(1)}×`, 'net ÷ worst drop', '']];
   $('#spellBox').innerHTML = `<div class="sh"><div><div class="eyebrow">Spell #${String(p.no).padStart(2, '0')} · ${RANK[p.stars]} · ${p.name}${p.ep ? ` · learned in Episode ${p.ep}` : ''}</div><h2 style="font-size:40px;color:${RC[p.stars]}">${p.spell}</h2><div class="lore-big">“${p.lore}”</div></div>
     <div class="ctas"><a class="btn ghost" href="#spellbook">← Spellbook</a><a class="btn ghost" href="#duel" id="toDuel">⚔ Duel it</a></div></div>
    <div class="detail"><div class="bigcard">${card(p)}<div class="dnav"><button class="btn gold" id="castBtn" style="--rc:${RC[p.stars]}">✦ Cast ${p.stars >= 4 ? '(grand)' : ''}</button><a class="btn ghost" href="#spell-${prev.id}" title="${prev.spell}">‹</a><a class="btn ghost" href="#spell-${next.id}" title="${next.spell}">›</a></div>
-     <div class="risk" style="margin-top:12px;justify-content:center"><label for="riskIn2">Risk</label><input id="riskIn2" type="range" min="0.1" max="2" step="0.05" value="${st.risk}"><b class="num">${st.risk.toFixed(2)}%</b></div></div>
+     <div class="risk" style="margin-top:12px;justify-content:center"><label for="riskIn2">Risk</label><input id="riskIn2" type="range" min="0.1" max="2" step="0.05" value="${st.risk}"><b class="num">${st.risk.toFixed(2)}%</b></div>
+     <div class="risk bal" style="margin-top:8px;justify-content:center"><label for="balIn2">Balance $</label><input id="balIn2" class="balIn" type="text" inputmode="numeric" value="${st.bal.toLocaleString()}" aria-label="Account balance in dollars"></div></div>
     <div style="display:grid;gap:14px;min-width:0">
      <div class="panel" style="--rc:${RC[p.stars]}"><div class="eyebrow" style="margin-bottom:10px">Strength · overall ${p.ovr} · ${p.arch}</div><div class="sbars">${STATS.map(([kk, l, h]) => `<div><div class="sb-h"><span>${l}</span><b class="num">${p.sc[kk]}</b></div><div class="sb-t"><i style="width:0%" data-w="${Math.max(4, p.sc[kk])}"></i></div><div class="sb-x">${h}</div></div>`).join('')}</div></div>
      <div class="tiles">${T.map(([a, b, c, cl]) => `<div class="tile"><div class="k">${a}</div><div class="v ${cl}">${b}</div><div class="x">${c}</div></div>`).join('')}</div>
      <div class="panel">${equity(p)}</div>
      <div class="panel">${heat(p)}</div>
-     <p class="small"><b>What it casts:</b> ${p.desc}. <b>Small details:</b> average win ${money(p.avgWin * k)} vs average loss ${money(p.avgLoss * k)} · biggest single loss ${money(p.maxLoss * k)}, never more than one stop · median trade held ${p.hold} h · ${p.perWeek} trades a week · ${p.greenDays}% of trading days green · longest losing streak ${p.lossStreak} · buys ${lw.toFixed(0)}% of profit.
+     <p class="small"><b>What it casts:</b> ${p.desc}. <b>Small details:</b> average win ${money(p.avgWin * km)} vs average loss ${money(p.avgLoss * km)} · biggest single loss ${money(p.maxLoss * km)}, never more than one stop · median trade held ${p.hold} h · ${p.perWeek} trades a week · ${p.greenDays}% of trading days green · longest losing streak ${p.lossStreak} · buys ${lw.toFixed(0)}% of profit.
      ${p.ea === 'Max' && (p.P === 'P1' || p.P === 'P2') ? `<br><span class="mut">Trades exactly like Prime ${p.P}.</span>` : ''}</p>
     </div></div>`;
   $('#spellBox .card').dataset.noopen = 1;
@@ -756,12 +823,13 @@ function spell(id, quiet) {
   requestAnimationFrame(() => $$('#spellBox .sb-t i').forEach(i => i.style.width = i.dataset.w + '%'));
   $('#castBtn').onclick = () => { const r = $('#spellBox .card').getBoundingClientRect(); cast(p, r.left + r.width / 2, r.top + r.height / 2); };
   $('#riskIn2').oninput = e => { e.target.nextElementSibling.textContent = (+e.target.value).toFixed(2) + '%'; };
+  hookBal($('#balIn2'), () => { const y = scrollY; spell(id, true); scrollTo(0, y); });
   $('#riskIn2').onchange = e => { st.risk = +e.target.value; save(); const y = scrollY; spell(id, true); scrollTo(0, y); };
   $('#toDuel').onclick = () => { st.dA = id; save(); };
   if (!reduce && !quiet) setTimeout(() => { const r = $('#spellBox .card').getBoundingClientRect(); cast(p, r.left + r.width / 2, r.top + r.height / 2); }, 350);
 }
 // duel
-const DK = [['Net profit', p => p.net, v => money(v * f()), 1], ['Worst drop', p => p.dd, v => (v * f()).toFixed(1) + '%', 1], ['Profit factor', p => p.pf, v => v.toFixed(2), 1], ['Win rate', p => p.win, v => v.toFixed(0) + '%', 1],
+const DK = [['Net profit', p => p.net, v => money(v * fm()), 1], ['Worst drop', p => p.dd, v => (v * f()).toFixed(1) + '%', 1], ['Profit factor', p => p.pf, v => v.toFixed(2), 1], ['Win rate', p => p.win, v => v.toFixed(0) + '%', 1],
   ['Green months', p => p.green / p.months, v => (v * 100).toFixed(0) + '%', 1], ['Longest losing run', p => -p.lossStreak, v => -v + ' trades', 1], ['Overall power', p => p.ovr, v => v, 1]];
 function duel(fight) {
   const opts = P.map(p => `<option value="${p.id}">${p.spell} · ${p.name}</option>`).join('');
@@ -773,7 +841,7 @@ function duel(fight) {
     return `<tr><td class="a ${wa ? 'win' : ''}">${fm(va)}</td><td class="c">${l}</td><td class="b ${wb ? 'win' : ''}">${fm(vb)}</td></tr>`; }).join('') +
     `<tr><td class="a" style="font-size:20px;color:${sa >= sb ? 'var(--gold2)' : 'var(--mut)'}">${sa}</td><td class="c">rounds won</td><td class="b" style="font-size:20px;color:${sb >= sa ? 'var(--gold2)' : 'var(--mut)'}">${sb}</td></tr>`;
   // overlaid curves
-  const W = 820, H = 220, pl = 50, k = f(); const A = a.eq.map(v => 100000 + (v - 100000) * k), B = b.eq.map(v => 100000 + (v - 100000) * k), mx = Math.max(...A, ...B), mn = 95000;
+  const W = 820, H = 220, pl = 50, k = fm(), B0 = BAL(); const A = a.eq.map(v => B0 + (v - 100000) * k), B = b.eq.map(v => B0 + (v - 100000) * k), mx = Math.max(...A, ...B), mn = B0 * 0.95;
   const pts = E => E.map((v, i) => `${(pl + i / (E.length - 1) * (W - pl - 10)).toFixed(1)},${(10 + (1 - (v - mn) / (mx - mn)) * (H - 30)).toFixed(1)}`).join(' ');
   $('#dChart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Both balance curves"><polyline points="${pts(A)}" fill="none" stroke="${RC[a.stars]}" stroke-width="2.4"/><polyline points="${pts(B)}" fill="none" stroke="${RC[b.stars]}" stroke-width="2.4" stroke-dasharray="${a.stars === b.stars ? '6 4' : ''}"/>
     <text x="${pl}" y="${H - 4}" fill="#8f97ab" font-size="11">trade 1 → last trade (each scaled to its own count)</text><text x="${W - 10}" y="22" fill="#8f97ab" font-size="11" text-anchor="end">${a.spell} vs ${b.spell}${a.stars === b.stars ? ' (dashed)' : ''}</text></svg>`;
@@ -786,14 +854,14 @@ $('#dA').onchange = e => { st.dA = e.target.value; save(); duel(); }; $('#dB').o
 $('#duelGo').onclick = () => duel(true);
 $('#duelRand').onclick = () => { const s = P.slice().sort(() => Math.random() - .5); st.dA = s[0].id; st.dB = s[1].id; save(); duel(true); };
 function map() {
-  const W = 1000, H = 380, pl = 64, pr = 20, pt = 16, pb = 40, k = f(); const xm = Math.max(...P.map(p => -p.dd * k)) * 1.08, ym = Math.max(...P.map(p => p.net * k)) * 1.08;
+  const W = 1000, H = 380, pl = 64, pr = 20, pt = 16, pb = 40, k = f(), km = fm(); const xm = Math.max(...P.map(p => -p.dd * k)) * 1.08, ym = Math.max(...P.map(p => p.net * km)) * 1.08;
   const X = v => pl + v / xm * (W - pl - pr), Y = v => pt + (1 - v / ym) * (H - pt - pb);
   const yst = Math.pow(10, Math.floor(Math.log10(ym / 4))), ys2 = Math.ceil(ym / 5 / yst) * yst, yt = []; for (let v = 0; v <= ym; v += ys2) yt.push(v);
   $('#map').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Profit against worst drop for all spells">
    ${yt.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#222a40"/><text x="${pl - 8}" y="${Y(v) + 4}" fill="#8f97ab" font-size="11" text-anchor="end" font-family="JetBrains Mono">${money(v, false)}</text>`).join('')}
    ${[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50].filter(v => v <= xm).map(v => `<text x="${X(v)}" y="${H - pb + 18}" fill="#8f97ab" font-size="11" text-anchor="middle" font-family="JetBrains Mono">${v}%</text>`).join('')}
    <text x="${(W + pl) / 2}" y="${H - 4}" fill="#8f97ab" font-size="12" text-anchor="middle">worst drop from a peak</text>
-   ${P.map(p => `<a href="#spell-${p.id}"><g><circle cx="${X(-p.dd * k)}" cy="${Y(p.net * k)}" r="${5 + p.stars * 1.4}" fill="${RC[p.stars]}" stroke="#0b0f1c" stroke-width="1.5"><title>${p.spell} (${p.name}): ${money(p.net * k)}, dip ${(p.dd * k).toFixed(1)}%</title></circle></g></a>`).join('')}
+   ${P.map(p => `<a href="#spell-${p.id}"><g><circle cx="${X(-p.dd * k)}" cy="${Y(p.net * km)}" r="${5 + p.stars * 1.4}" fill="${RC[p.stars]}" stroke="#0b0f1c" stroke-width="1.5"><title>${p.spell} (${p.name}): ${money(p.net * km)}, dip ${(p.dd * k).toFixed(1)}%</title></circle></g></a>`).join('')}
    <g font-size="11" fill="#c9cdd8">${[1, 2, 3, 4, 5].map((r, i) => `<circle cx="${pl + 10 + i * 100}" cy="${pt + 8}" r="6" fill="${RC[r]}"/><text x="${pl + 20 + i * 100}" y="${pt + 12}">${RANK[r]}</text>`).join('')}</g></svg>`;
 }
 // season
@@ -815,7 +883,12 @@ function play(e) {
   d.querySelector('video').onerror = () => { d.querySelector('#pnote').textContent = `Episode ${e.n} plays on the full site. Upload ${e.file} into an "episodes" folder next to this page.`; };
 }
 // ---------------------------------------------------------------- router + controls
-function save() { store.set('st', { ea: st.ea, r: st.r, sort: st.sort, risk: st.risk, q: st.q, dA: st.dA, dB: st.dB }); }
+function parseBal(v) { const n = parseFloat(String(v).replace(/[^0-9.kKmM]/g, '').replace(/k$/i, 'e3').replace(/m$/i, 'e6')); return isFinite(n) ? Math.min(1e9, Math.max(100, Math.round(n))) : 100000; }
+function hookBal(el, after) { if (!el) return;
+  const commit = () => { const n = parseBal(el.value); el.value = n.toLocaleString(); if (n !== st.bal) { st.bal = n; save(); $$('.balIn').forEach(x => { if (x !== el) x.value = n.toLocaleString(); }); after(); } };
+  el.addEventListener('change', commit); el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+  el.addEventListener('focus', () => el.select()); }
+function save() { store.set('st', { ea: st.ea, r: st.r, sort: st.sort, risk: st.risk, bal: st.bal, q: st.q, dA: st.dA, dB: st.dB }); }
 function route() {
   const h = (location.hash || '#home').slice(1); const v = h.startsWith('spell-') ? 'spell' : ['home', 'spellbook', 'duel', 'season', 'academy'].includes(h) ? h : 'home';
   $$('.view').forEach(x => x.classList.toggle('on', x.id === 'v-' + v));
@@ -828,6 +901,7 @@ $$('#eaSeg button').forEach(b => b.onclick = () => { st.ea = b.dataset.ea; $$('#
 $$('#rkSeg button').forEach(b => b.onclick = () => { st.r = +b.dataset.r; $$('#rkSeg button').forEach(x => x.setAttribute('aria-pressed', x === b)); save(); book(); });
 $('#sortSel').value = st.sort; $('#sortSel').onchange = e => { st.sort = e.target.value; save(); book(); };
 $('#q').value = st.q; $('#q').oninput = e => { st.q = e.target.value; save(); book(); };
+$('#balIn').value = st.bal.toLocaleString(); hookBal($('#balIn'), book);
 $('#riskIn').value = st.risk; $('#riskOut').textContent = st.risk.toFixed(2) + '%'; $('#riskIn').oninput = e => { st.risk = +e.target.value; $('#riskOut').textContent = st.risk.toFixed(2) + '%'; save(); book(); };
 $$('#eaSeg button').forEach(x => x.setAttribute('aria-pressed', x.dataset.ea === st.ea)); $$('#rkSeg button').forEach(x => x.setAttribute('aria-pressed', +x.dataset.r === st.r));
 addEventListener('keydown', e => { if (!location.hash.startsWith('#spell-') || e.target.matches('input,select')) return; const i = P.findIndex(p => p.id === location.hash.slice(7));
@@ -839,8 +913,8 @@ addEventListener('keydown', e => { if (!location.hash.startsWith('#spell-') || e
   btn.onclick = () => { if (!v.src) v.src = window.__CREATOR__ || ''; btn.classList.add('gone'); v.play().catch(() => {});
     if (st.music) $('#musicBtn').click(); };
   v.onerror = () => { btn.classList.remove('gone'); btn.querySelector('em').textContent = 'Video plays on the full site'; };
-  $('#toCreator').onclick = e => { e.preventDefault(); sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); };
-  new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) sec.classList.add('seen'); }), { threshold: .3 }).observe(sec);
+  $('#toCreator').onclick = e => { e.preventDefault(); location.hash = 'academy'; setTimeout(() => sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }), 450); };
+  new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) sec.classList.add('cr-in'); }), { threshold: .3 }).observe(sec);
   addEventListener('hashchange', () => v.pause());
 })();
 // visit counter (works on the published GitHub site; hidden if the counter service can't be reached)
@@ -855,6 +929,38 @@ addEventListener('keydown', e => { if (!location.hash.startsWith('#spell-') || e
   const tryN = i => i < srcs.length && srcs[i]().then(show).catch(() => tryN(i + 1));
   setTimeout(() => tryN(0), 600);
 })();
+// ladder of success (Academy)
+const RUNGS = [
+  ['done', 'The question', 'What if pure mathematics could trade gold?', '?'],
+  ['done', 'Built. Broken. Rebuilt.', 'Indicator after indicator. Most ideas failed; the lessons stayed.', '⚒'],
+  ['done', '812 million ticks', 'Every minute of gold gathered, and the feed checked against a live broker.', '∑'],
+  ['done', '847,000 trials', 'Combinations tested with the real spread and extra slippage. Only the strongest survived.', '⚖'],
+  ['done', '42 spells', 'Forty-two profiles, all finished green. The main 39 stayed profitable on years they had never seen.', '✦'],
+  ['done', 'The engines', 'Max and Prime EAs for MT5, a licence-key system, and 40 single-profile EAs.', '⚙'],
+  ['done', 'EYES opens', 'An AI that watches gold and grades its own calls. It never blinks.', '◉'],
+  ['done', 'The realm', 'This site, the creator story and a 12-episode season with every spell.', '♜'],
+  ['now', 'Forward test', 'Compiling every EA and running them on demo and four cent accounts.', '▲'],
+  ['next', 'Launch', 'The MQL5 Market listing and our own shop open for the first buyers.', '⚑'],
+  ['next', 'A live record', 'A public, verified live signal anyone can follow, month by month.', '☍'],
+  ['next', 'Season 2 and beyond', 'New spells, more markets and the community that climbs with us.', '♛']];
+(function buildLadder() {
+  const L = $('#ladder'); if (!L) return; const done = RUNGS.filter(r => r[0] === 'done').length;
+  $('#rungT').textContent = RUNGS.length;
+  L.style.setProperty('--prog', ((done + 0.5) / RUNGS.length).toFixed(3));
+  L.innerHTML = '<div class="rails"><i class="fill"></i></div>' + RUNGS.map(([s, h, d, ic], i) => `<div class="rung ${s} ${i % 2 ? 'r' : 'l'}" style="--i:${i}">
+    <div class="rcard"><div class="rno">Rung ${i + 1}${s === 'now' ? ' · we are here' : s === 'next' ? ' · next' : ''}</div><h3>${h}</h3><p>${d}</p></div>
+    <div class="rmid"><span class="bar"></span><span class="node">${s === 'done' ? '✓' : ic}</span>${s === 'now' ? '<span class="climber" aria-hidden="true"><svg viewBox="0 0 40 60"><path d="M20 2 L31 26 H9 Z" fill="#1a1530" stroke="#e8b84a" stroke-width="1.5"/><circle cx="20" cy="30" r="6" fill="#efe2c4"/><path d="M10 58 L14 36 H26 L30 58 Z" fill="#1a1530" stroke="#e8b84a" stroke-width="1.5"/><path d="M28 40 L38 30" stroke="#ffe39a" stroke-width="2"/><circle cx="38" cy="30" r="2.5" fill="#ffe39a"/></svg></span>' : ''}</div>
+    <div class="rspace"></div></div>`).reverse().join('');
+})();
+function climb() {
+  const L = $('#ladder'); if (!L) return; const done = RUNGS.filter(r => r[0] === 'done').length;
+  L.classList.remove('go'); void L.offsetWidth; requestAnimationFrame(() => L.classList.add('go'));
+  const el = $('#rungN'), bar = $('#rungBar'), t0 = performance.now(), D = reduce ? 1 : 2400;
+  const step = n => { const k = Math.min(1, (n - t0) / D); el.textContent = Math.round(done * k); bar.style.width = (done / RUNGS.length * 100 * k) + '%'; if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+addEventListener('hashchange', () => { if (location.hash === '#academy') climb(); });
+if (location.hash === '#academy') setTimeout(climb, 200);
 // ---------------------------------------------------------------- MOBILE LAYER
 const mq = matchMedia('(max-width: 760px)'), isM = () => mq.matches;
 // bottom navigation
