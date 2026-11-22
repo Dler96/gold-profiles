@@ -426,6 +426,89 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
   .rung h3{font-size:17px}.rung p{font-size:13.5px}
   .climber{left:auto;right:-10px;width:26px;height:40px;top:calc(50% - 44px)}
 }
+
+/* ---------------- CHRISTMAS EDITION (body.xmas) ---------------- */
+.xhat,.garland,.xribbon,.xtree,.xladstar{display:none}
+.xbtn{font-size:16px;padding-inline:12px}
+.xbtn[aria-pressed="true"]{border-color:#9fd8ff;color:#d8f0ff;box-shadow:0 0 14px rgba(150,210,255,.35)}
+body.xmas .xhat{display:block;position:absolute;width:30px;left:-14px;top:-17px;transform:rotate(-18deg);pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+body.xmas .logo{position:relative}
+body.xmas .garland{display:block;position:absolute;left:0;right:0;bottom:-20px;height:24px;pointer-events:none}
+body.xmas .garland svg{position:absolute;inset:0;width:100%;height:100%}
+body.xmas .garland i{position:absolute;width:7px;height:11px;margin-left:-3.5px;border-radius:50% 50% 45% 45%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 3px var(--c);animation:twinkle 1.5s ease-in-out infinite}
+body.xmas .garland i::before{content:"";position:absolute;left:1.5px;top:-3px;width:4px;height:3px;background:#2b3a2f;border-radius:1px}
+@keyframes twinkle{0%,100%{opacity:1}50%{opacity:.25;box-shadow:none}}
+/* snow caps on cards and panels */
+body.xmas .card::before{content:"";position:absolute;z-index:5;left:-4px;right:-4px;top:-9px;height:24px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 26' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='0' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dbe9f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 16 C2 9 8 6 16 7 C24 2 36 3 44 6 C54 1 68 2 78 6 C88 2 100 2 110 5 C122 1 136 2 146 6 C156 2 170 3 178 7 C188 5 198 9 198 16 C198 18 196 19 190 19 C180 19 176 18 170 19 C166 19 165 24 161 24 C157 24 157 19 152 19 L104 19 C100 19 99 22 96 22 C93 22 93 19 89 19 L52 19 C47 19 46 25 42 25 C38 25 38 19 33 19 L10 19 C5 19 2 18 2 16 Z' fill='url(%23g)'/%3E%3Cpath d='M14 10 C30 6 44 9 60 8' stroke='%23ffffff' stroke-width='1.2' fill='none' opacity='.9'/%3E%3C/svg%3E") center/100% 100% no-repeat;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
+body.xmas .card.r5::after{content:"";position:absolute;z-index:6;right:-6px;top:-10px;width:34px;height:30px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 30'%3E%3Cpath d='M2 14 C8 4 16 4 17 14 C10 12 6 16 2 14Z' fill='%232f9e60'/%3E%3Cpath d='M32 14 C26 4 18 4 17 14 C24 12 28 16 32 14Z' fill='%23278a52'/%3E%3Ccircle cx='14' cy='18' r='4' fill='%23d2283a'/%3E%3Ccircle cx='20' cy='19' r='4' fill='%23e03344'/%3E%3Ccircle cx='17' cy='14' r='3.5' fill='%23c41f31'/%3E%3C/svg%3E") center/contain no-repeat}
+body.xmas .panel,body.xmas .creator,body.xmas .scroll{position:relative}
+body.xmas .creator::before,body.xmas .visits::before{content:"";position:absolute;left:18px;right:18px;top:-6px;height:12px;border-radius:12px 12px 6px 6px;background:#fff;opacity:.92;
+  -webkit-mask:radial-gradient(circle at 8px 12px,#000 7px,transparent 8px) 0 0/22px 12px repeat-x,linear-gradient(#000,#000) 0 0/100% 5px no-repeat;mask:radial-gradient(circle at 8px 12px,#000 7px,transparent 8px) 0 0/22px 12px repeat-x,linear-gradient(#000,#000) 0 0/100% 5px no-repeat}
+body.xmas .visits{position:fixed}
+body.xmas .visits::before{left:10px;right:10px;top:-5px;height:9px}
+/* holiday ribbon */
+body.xmas .xribbon{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 0;padding:12px 18px;border-radius:14px;
+  background:linear-gradient(90deg,#8e1424,#c41f31 40%,#8e1424);border:1px solid #ffd76a;color:#fff3e0;box-shadow:0 10px 30px rgba(196,31,49,.25);position:relative;overflow:hidden}
+body.xmas .xribbon::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-100%);animation:shine 4s infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
+body.xmas .xribbon b{font-family:var(--display);font-size:18px;letter-spacing:.06em;color:#ffe39a}
+body.xmas .xribbon code{font-family:var(--mono);background:#fff3e0;color:#8e1424;padding:2px 8px;border-radius:6px;font-weight:700}
+body.xmas .xribbon .bow{font-size:20px}
+/* spell tree */
+body.xmas .xtree{display:block}
+.xtree-in{position:relative;max-width:560px;margin:0 auto}
+.xtree-in svg{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5))}
+.xtree .orn circle:first-child{animation:orn 2.6s ease-in-out infinite;animation-delay:var(--d);transform-box:fill-box;transform-origin:center;transition:transform .2s}
+.xtree .orn:hover circle:first-child,.xtree .orn:focus circle:first-child{transform:scale(1.35);filter:drop-shadow(0 0 8px #fff)}
+@keyframes orn{0%,100%{filter:drop-shadow(0 0 2px rgba(255,255,255,.2))}50%{filter:drop-shadow(0 0 10px rgba(255,240,200,.9))}}
+.xstar{transform-box:fill-box;transform-origin:center;animation:xstar 3s ease-in-out infinite}
+@keyframes xstar{50%{filter:drop-shadow(0 0 18px #ffd76a);transform:scale(1.08)}}
+.xgifts{display:flex;justify-content:center;gap:10px;margin-top:-30px;position:relative}
+.xgifts span{width:var(--w);height:calc(var(--w) * .8);background:var(--c);border-radius:6px;position:relative;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.xgifts span::before{content:"";position:absolute;left:44%;width:12%;top:0;bottom:0;background:#ffd76a}
+.xgifts span::after{content:"";position:absolute;top:38%;height:14%;left:0;right:0;background:#ffd76a}
+/* ladder star */
+body.xmas .xladstar{display:block;text-align:center;font-size:54px;line-height:1;color:#ffd76a;margin:-10px 0 4px;text-shadow:0 0 24px #ffd76a;animation:xstar 3s ease-in-out infinite;position:relative;z-index:2}
+@media (max-width:760px){body.xmas .xladstar{text-align:left;padding-left:14px;font-size:40px}body.xmas .xhat{width:24px;left:-10px;top:-13px}}
+@media (prefers-reduced-motion:reduce){body.xmas .garland i,.xtree .orn circle:first-child,.xstar,body.xmas .xladstar,body.xmas .xribbon::after{animation:none}}
+/* music picker */
+.mpick{padding-inline:10px;margin-left:-6px;border-top-left-radius:6px;border-bottom-left-radius:6px}
+.mpop{position:fixed;z-index:60;width:min(340px,calc(100vw - 20px));display:none;background:rgba(12,15,30,.97);backdrop-filter:blur(12px);border:1px solid rgba(232,184,74,.35);border-radius:16px;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.mpop.open{display:block;animation:rise .25s}
+.mpop .mh{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:8px 10px}
+.mpop .mt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:9px 10px;color:var(--txt);cursor:pointer;font:inherit}
+.mpop .mt:hover,.mpop .mt:focus-visible{background:rgba(255,255,255,.06)}
+.mpop .mt.on{background:rgba(232,184,74,.12)}
+.mpop .mt.dim{opacity:.55}
+.mpop .mt b{display:block;font-size:14px;font-weight:600}.mpop .mt small{display:block;color:var(--mut);font-size:12px}
+.mpop .eq{width:26px;height:26px;flex:none;display:flex;align-items:flex-end;justify-content:center;gap:2px;color:var(--gold2);font-size:15px}
+.mpop .eq i{width:4px;background:var(--gold2);border-radius:2px;animation:eqb .9s ease-in-out infinite}.mpop .eq i:nth-child(2){animation-delay:.2s}.mpop .eq i:nth-child(3){animation-delay:.45s}
+@keyframes eqb{0%,100%{height:5px}50%{height:18px}}
+.mpop .mf{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px 4px;border-top:1px solid var(--line);margin-top:6px;font-size:11px;color:var(--mut)}
+.mpop .mstop{background:none;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.mpop .eq i{animation:none;height:12px}}
+.mpop .mstop{white-space:nowrap}
+@media (max-width:760px){.mlabel{display:none}nav.top .iconbtn{padding:8px 11px}.mpick{margin-left:-4px}}
+@media (max-width:760px){nav.top .in{gap:6px}nav.top .in>.iconbtn,nav.top .in>button{flex:none}}
+@media (max-width:420px){.logo{font-size:14px;letter-spacing:.04em}.logo small{font-size:7.5px;letter-spacing:.1em}nav.top .iconbtn{padding:7px 9px;font-size:14px}}
+#musicBtn.waiting{animation:mwait 1.6s ease-in-out infinite;border-color:var(--gold)}
+@keyframes mwait{50%{box-shadow:0 0 0 6px rgba(232,184,74,.18),0 0 16px rgba(232,184,74,.45)}}
+/* music bubble */
+.mbub{position:fixed;z-index:58;display:flex;align-items:stretch;gap:2px;max-width:min(300px,calc(100vw - 20px));padding:4px;border-radius:16px;
+  background:linear-gradient(180deg,#fff7e2,#f3dfae);color:#2a1d06;box-shadow:0 12px 34px rgba(0,0,0,.5),0 0 0 1px rgba(232,184,74,.6);
+  opacity:0;transform:translateY(-8px) scale(.96);pointer-events:none;transition:opacity .35s,transform .35s}
+.mbub.on{opacity:1;transform:none;pointer-events:auto;animation:mbob 2.6s 1s ease-in-out infinite}
+.mbub::before{content:"";position:absolute;top:-7px;right:26px;width:14px;height:14px;background:#fff7e2;transform:rotate(45deg);box-shadow:-1px -1px 0 rgba(232,184,74,.6)}
+.mbub .mb-go{display:flex;gap:10px;align-items:center;text-align:left;background:none;border:0;padding:8px 6px 8px 10px;cursor:pointer;color:inherit;font:inherit;position:relative}
+.mbub .mb-note{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#e8b84a,#c8901f);color:#fff;font-size:16px;animation:mnote 1.4s ease-in-out infinite}
+.mbub b{display:block;font-size:14px}.mbub small{display:block;font-size:12px;color:#6b5420}
+.mbub .mb-x{background:none;border:0;color:#8a6a28;font-size:13px;padding:4px 8px;cursor:pointer;align-self:flex-start;border-radius:8px}
+.mbub .mb-x:hover{background:rgba(0,0,0,.06)}
+body.xmas .mbub .mb-note{background:linear-gradient(180deg,#e0394b,#a5182a)}
+@keyframes mbob{50%{transform:translateY(-3px)}}
+@keyframes mnote{50%{transform:rotate(-12deg) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.mbub.on,.mbub .mb-note{animation:none}}
 </style></head><body>
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -911,7 +994,7 @@ addEventListener('keydown', e => { if (!location.hash.startsWith('#spell-') || e
   const sec = $('#creator'), v = $('#crVid'), btn = $('#crPlay'); if (!sec) return;
   btn.style.setProperty('--crp', `url(${window.__CREATOR_POSTER__ || ''})`); v.poster = window.__CREATOR_POSTER__ || '';
   btn.onclick = () => { if (!v.src) v.src = window.__CREATOR__ || ''; btn.classList.add('gone'); v.play().catch(() => {});
-    if (st.music) $('#musicBtn').click(); };
+    if (st.music) { if (window.__pauseMusic) window.__pauseMusic(); else $('#musicBtn').click(); } };
   v.onerror = () => { btn.classList.remove('gone'); btn.querySelector('em').textContent = 'Video plays on the full site'; };
   $('#toCreator').onclick = e => { e.preventDefault(); location.hash = 'academy'; setTimeout(() => sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }), 450); };
   new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) sec.classList.add('cr-in'); }), { threshold: .3 }).observe(sec);
@@ -1055,8 +1138,164 @@ play = function (ep) {
   addEventListener('hashchange', close, { once: true });
 };
 
+// ---------------------------------------------------------------- CHRISTMAS EDITION (auto 15 Nov – 6 Jan, toggle with the ❄ button)
+function isX() { return document.body.classList.contains('xmas'); }
+(function festive() {
+  const now = new Date(), m = now.getMonth(), d = now.getDate();
+  const season = (m === 10 && d >= 15) || m === 11 || (m === 0 && d <= 6);
+  const pref = store.get('xmas', null), on = pref === null ? season : pref;
+  const btn = document.createElement('button'); btn.className = 'iconbtn xbtn'; btn.id = 'xmasBtn'; btn.title = 'Christmas decorations on / off'; btn.textContent = '❄';
+  $('#musicBtn').before(btn);
+  const set = v => { document.body.classList.toggle('xmas', v); btn.setAttribute('aria-pressed', v); store.set('xmas', v); };
+  btn.onclick = () => { set(!isX()); if (isX()) { const r = btn.getBoundingClientRect(); jingleBurst(r.left + r.width / 2, r.top + r.height / 2); } };
+  set(on);
+
+  // santa hat on the logo + garland of lights under the bar
+  const hat = document.createElement('span'); hat.className = 'xhat'; hat.setAttribute('aria-hidden', 'true');
+  hat.innerHTML = '<svg viewBox="0 0 60 44"><path d="M4 36 C10 14 26 2 44 6 C52 8 56 16 54 26 L48 22 C46 16 40 14 34 16 C26 20 22 28 20 36 Z" fill="#d2283a"/><rect x="1" y="32" width="26" height="10" rx="5" fill="#f4f1ea"/><circle cx="52" cy="28" r="6" fill="#f4f1ea"/></svg>';
+  $('.logo').prepend(hat);
+  const gar = document.createElement('div'); gar.className = 'garland'; gar.setAttribute('aria-hidden', 'true');
+  const COLS = ['#ff4d5e', '#ffd76a', '#3fd68f', '#5fb8ff', '#ff9a3c'];
+  gar.innerHTML = '<svg preserveAspectRatio="none" viewBox="0 0 1000 24"><path d="M0 4 Q 50 22 100 4 T 200 4 T 300 4 T 400 4 T 500 4 T 600 4 T 700 4 T 800 4 T 900 4 T 1000 4" fill="none" stroke="#1d5a35" stroke-width="2.5"/></svg>' +
+    Array.from({ length: 40 }, (_, i) => { const x = (i + .5) / 40 * 100, ph = (x / 10) % 1, y = 4 + 18 * Math.abs(Math.sin(ph * Math.PI)) * .8;
+      return `<i style="left:${x}%;top:${y}px;--c:${COLS[i % 5]};animation-delay:${(i % 3) * .5}s"></i>`; }).join('');
+  $('nav.top').appendChild(gar);
+
+  // holiday launch ribbon on the Portal
+  const rib = document.createElement('div'); rib.className = 'xribbon';
+  rib.innerHTML = '<span class="bow">🎁</span><b>Holiday launch</b><span>30% off every EA with code <code>LAUNCH30</code> · until 31 December</span>';
+  $('#v-home .portal').before(rib);
+
+  // the Spell Tree: 42 ornaments, one per spell
+  const rows = [1, 2, 3, 4, 5, 6, 7, 8, 6], Wt = 560, Ht = 600; let k = 0;
+  const order = P.slice().sort((a, b) => b.stars - a.stars || b.net - a.net);
+  let orn = '';
+  rows.forEach((n, r) => { const y = 90 + r * 56, half = 26 + r * 30;
+    for (let j = 0; j < n; j++) { const p = order[k++]; if (!p) break; const x = Wt / 2 + (n === 1 ? 0 : -half + j * (2 * half / (n - 1)));
+      orn += `<a href="#spell-${p.id}" class="orn" style="--d:${(k % 7) * .35}s"><circle cx="${x}" cy="${y}" r="${10 + p.stars * 1.6}" fill="${RC[p.stars]}"/><circle cx="${x - 3}" cy="${y - 4}" r="3" fill="#fff" opacity=".7"/><title>${p.spell} · ${p.name} · ${RANK[p.stars]}</title></a>`; } });
+  const tree = document.createElement('section'); tree.className = 'xtree';
+  tree.innerHTML = `<div class="sh"><div><div class="eyebrow">Christmas edition</div><h2>The Spell Tree</h2></div><div class="mut small">42 ornaments, one for every spell. The brightest hang highest. Tap one to open it.</div></div>
+   <div class="xtree-in"><svg viewBox="0 0 ${Wt} ${Ht}" role="img" aria-label="A Christmas tree decorated with all 42 spells">
+    <defs><linearGradient id="xtg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1f7a4a"/><stop offset="1" stop-color="#0d3d26"/></linearGradient></defs>
+    ${[0, 1, 2, 3].map(i => `<polygon points="${Wt / 2},${40 + i * 110} ${Wt / 2 - 90 - i * 70},${200 + i * 120} ${Wt / 2 + 90 + i * 70},${200 + i * 120}" fill="url(#xtg)" stroke="#0a2e1c" stroke-width="2"/>`).join('')}
+    <rect x="${Wt / 2 - 30}" y="${Ht - 40}" width="60" height="40" fill="#5a3a22"/>
+    ${[0, 1, 2, 3, 4].map(i => `<path d="M${Wt / 2 - 60 - i * 50} ${150 + i * 85} Q ${Wt / 2} ${190 + i * 95} ${Wt / 2 + 60 + i * 50} ${140 + i * 85}" stroke="#ffd76a" stroke-width="2" fill="none" stroke-dasharray="2 7" opacity=".8"/>`).join('')}
+    ${orn}
+    <g class="xstar"><polygon points="${Wt / 2},12 ${Wt / 2 + 9},38 ${Wt / 2 + 36},38 ${Wt / 2 + 14},54 ${Wt / 2 + 22},80 ${Wt / 2},64 ${Wt / 2 - 22},80 ${Wt / 2 - 14},54 ${Wt / 2 - 36},38 ${Wt / 2 - 9},38" fill="#ffd76a"/></g>
+   </svg><div class="xgifts">${['#d2283a', '#2f9e60', '#e8b84a'].map((c, i) => `<span style="--c:${c};--w:${[70, 56, 64][i]}px"></span>`).join('')}</div></div>`;
+  $('#v-home').appendChild(tree);
+
+  // star on top of the ladder
+  const L = $('#ladder'); if (L) { const s = document.createElement('div'); s.className = 'xladstar'; s.textContent = '★'; L.prepend(s); }
+
+  // snowfall on the sky
+  const FL = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 2.4, s: .3 + Math.random() * .9, p: Math.random() * 6 }));
+  window.__snow = t => { if (!isX()) return; const dp = devicePixelRatio;
+    sx.fillStyle = 'rgba(255,255,255,.85)';
+    for (const f of FL) { const y = ((f.y + t / 1000 * .03 * f.s) % 1.05) - .02, x = f.x + Math.sin(t / 1600 * f.s + f.p) * .015 + (mouse.x - .5) * .01 * f.s;
+      sx.globalAlpha = .35 + .55 * f.s / 1.2; sx.beginPath(); sx.arc(x * SW, y * SH, f.r * dp, 0, 7); sx.fill(); }
+    sx.globalAlpha = 1; };
+
+  // festive casting: red, green, gold and white sparks
+  const _c = cast;
+  cast = function (p, x, y) { const n0 = parts.length; _c(p, x, y);
+    if (isX()) { const C = ['#ff4d5e', '#3fd68f', '#ffd76a', '#ffffff', '#ffffff']; for (let i = n0; i < parts.length; i++) parts[i].c = C[i % C.length]; } };
+  function jingleBurst(x, y) { const C = ['#ff4d5e', '#3fd68f', '#ffd76a', '#ffffff']; const dp = devicePixelRatio;
+    for (let i = 0; i < 60; i++) { const a = Math.random() * 6.283, v = (2 + Math.random() * 5) * dp; parts.push({ x: x * dp, y: y * dp, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, dec: .015 + Math.random() * .015, s: (1.5 + Math.random() * 2.5) * dp, c: C[i % 4], spin: 0 }); }
+    if (!fxOn) { fxOn = true; requestAnimationFrame(fxLoop); } }
+
+  // music: Jingle Bells (public domain) with sleigh bells while the decorations are on
+  const JB = [[76,1],[76,1],[76,2],[76,1],[76,1],[76,2],[76,1],[79,1],[72,1.5],[74,.5],[76,4],[77,1],[77,1],[77,1.5],[77,.5],[77,1],[76,1],[76,1],[76,.5],[76,.5],[76,1],[74,1],[74,1],[76,1],[74,2],[79,2],
+              [76,1],[76,1],[76,2],[76,1],[76,1],[76,2],[76,1],[79,1],[72,1.5],[74,.5],[76,4],[77,1],[77,1],[77,1.5],[77,.5],[77,1],[76,1],[76,1],[76,.5],[76,.5],[79,1],[79,1],[77,1],[74,1],[72,4]];
+  const JC = [48, 48, 48, 48, 53, 48, 50, 43, 48, 48, 48, 48, 53, 48, 43, 48];
+  const _waltz = playLoop;
+  playLoop = function () {
+    if (!isX()) return _waltz();
+    const b = 60 / 168, t0 = AC.currentTime + .1; let t = t0;
+    JC.forEach((r, i) => { const T = t0 + i * 4 * b; tone(r - 12, T, 2 * b, .08, 'triangle'); tone(r - 5, T + 2 * b, 2 * b, .06, 'triangle');
+      for (let j = 0; j < 4; j++) [r + 12, r + 16, r + 19].forEach(m => tone(m, T + j * b + b / 2, b * .5, .012, 'triangle')); });
+    JB.forEach(([m, l]) => { tone(m, t, l * b + .3, .055); tone(m + 12, t, .3, .012); t += l * b; });
+    for (let i = 0; i < 64; i++) { const T = t0 + i * b; tone(108 + (i % 2), T, .07, .006, 'square'); tone(103, T + b / 2, .05, .004, 'square'); }
+    musicTimer = setTimeout(playLoop, JC.length * 4 * b * 1000 - 120);
+  };
+  $('#musicBtn').title = 'Play the academy music';
+})();
+// ---------------------------------------------------------------- music: jazz Christmas selection + academy waltz (falls back to the built-in synth)
+(function tracks() {
+  const U = window.__MUSIC__ || {};
+  const T = [
+    { id: 'jz_swing', t: 'Jingle Bells', s: 'Swing trio · vibes & brushes', x: 1 },
+    { id: 'jz_bossa', t: 'Deck the Halls', s: 'Bossa nova · flute & guitar', x: 1 },
+    { id: 'jz_waltz', t: 'We Wish You a Merry Christmas', s: 'Jazz waltz · Rhodes', x: 1 },
+    { id: 'jz_ballad', t: 'Silent Night', s: 'Piano ballad · strings', x: 1 },
+    { id: 'xmas', t: 'Jingle Bells', s: 'Orchestral · sleigh bells', x: 1 },
+    { id: 'waltz', t: 'The Academy Waltz', s: 'Harp & strings', x: 0 }];
+  const src = tr => U[tr.id] || 'music/' + tr.id + '.mp4';
+  let au = null, cur = null, synth = false;
+  const list = () => T.filter(tr => isX() ? tr.x : !tr.x);
+  function startSynth() { synth = true; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); mGain = mGain || AC.createGain(); mGain.gain.value = .8; mGain.connect(AC.destination); AC.resume(); clearTimeout(musicTimer); playLoop(); } catch (e) {} }
+  function stopAll() { if (au) au.pause(); clearTimeout(musicTimer); if (AC) AC.suspend(); synth = false; paint(); }
+  function play(tr, auto) {
+    if (au) au.pause(); clearTimeout(musicTimer); cur = tr;
+    au = new Audio(src(tr)); au.volume = 0; au.loop = list().length < 2;
+    au.onended = () => { const L = list(), i = L.indexOf(cur); play(L[(i + 1) % L.length]); };
+    au.onerror = () => { if (st.music) startSynth(); };
+    au.play().then(() => { const t0 = performance.now(); const f = n => { const v = Math.max(0, Math.min(1, (n - t0) / 1200)) * .65; au.volume = v; if (v < .65 && !au.paused) requestAnimationFrame(f); }; requestAnimationFrame(f); }).catch(auto ? arm : startSynth);
+    st.music = true; $('#musicBtn').setAttribute('aria-pressed', true); paint();
+  }
+  // picker
+  const pick = document.createElement('button'); pick.className = 'iconbtn mpick'; pick.setAttribute('aria-label', 'Choose music'); pick.setAttribute('aria-expanded', 'false'); pick.textContent = '▾';
+  $('#musicBtn').after(pick); $('#musicBtn').innerHTML = '♪<span class="mlabel"> Music</span>';
+  const pop = document.createElement('div'); pop.className = 'mpop'; pop.setAttribute('role', 'menu'); document.body.appendChild(pop);
+  function paint() {
+    const playing = st.music && au && !au.paused;
+    pop.innerHTML = `<div class="mh">${isX() ? '🎄 Jazz Christmas selection' : 'Academy music'}</div>` + T.map(tr => {
+      const on = cur === tr && playing, dim = isX() ? !tr.x : tr.x;
+      return `<button role="menuitem" class="mt${on ? ' on' : ''}${dim ? ' dim' : ''}" data-id="${tr.id}"><span class="eq">${on ? '<i></i><i></i><i></i>' : '♪'}</span><span><b>${tr.t}</b><small>${tr.s}</small></span></button>`; }).join('') +
+      `<div class="mf">${playing ? '<button class="mstop">■ Stop</button>' : ''}<span>Original arrangements of public-domain carols</span></div>`;
+    pop.querySelectorAll('.mt').forEach(btn => btn.onclick = () => { play(T.find(tr => tr.id === btn.dataset.id)); });
+    const sb = pop.querySelector('.mstop'); if (sb) sb.onclick = () => { st.music = false; $('#musicBtn').setAttribute('aria-pressed', false); stopAll(); };
+  }
+  const place = () => { const r = pick.getBoundingClientRect(); pop.style.top = (r.bottom + 10) + 'px'; pop.style.right = Math.max(10, innerWidth - r.right) + 'px'; };
+  pick.onclick = e => { e.stopPropagation(); const o = !pop.classList.contains('open'); pop.classList.toggle('open', o); pick.setAttribute('aria-expanded', o); if (o) { paint(); place(); } };
+  document.addEventListener('click', e => { if (!pop.contains(e.target) && e.target !== pick) { pop.classList.remove('open'); pick.setAttribute('aria-expanded', 'false'); } });
+  addEventListener('resize', () => pop.classList.contains('open') && place());
+  $('#musicBtn').onclick = () => {
+    if (st.music) { st.music = false; $('#musicBtn').setAttribute('aria-pressed', false); stopAll(); store.set('music', false); return; }
+    store.set('music', true); disarm(); const L = list(); play(cur && L.includes(cur) ? cur : L[0]);
+  };
+  $('#xmasBtn').addEventListener('click', () => { if (st.music) { const L = list(); play(L[0]); } else paint(); });
+  // music on by default (unless the visitor switched it off before)
+  let armed = false;
+  function onFirst(e) { if (e.target.closest && e.target.closest('#musicBtn, .mpick, .mpop, .mbub, video, .cr-play, #eps button, .reels')) { disarm(); return; }
+    disarm(); if (store.get('music', true) && !(au && !au.paused)) { const L = list(); play(cur && L.includes(cur) ? cur : L[0]); } }
+  function arm() { if (armed) return; armed = true; st.music = false; $('#musicBtn').setAttribute('aria-pressed', false); $('#musicBtn').classList.add('waiting');
+    ['pointerdown', 'keydown', 'touchend'].forEach(ev => document.addEventListener(ev, onFirst, true)); paint(); setTimeout(() => window.__showBub && window.__showBub(), 900); }
+  function disarm() { armed = false; $('#musicBtn').classList.remove('waiting'); ['pointerdown', 'keydown', 'touchend'].forEach(ev => document.removeEventListener(ev, onFirst, true)); }
+  if (store.get('music', true)) setTimeout(() => { const L = list(); play(L[0], true); }, 400);
+  window.__pauseMusic = () => { st.music = false; $('#musicBtn').setAttribute('aria-pressed', false); stopAll(); disarm(); };
+  // gentle bubble: tells visitors music is available if it hasn't started yet
+  const bub = document.createElement('div'); bub.className = 'mbub'; bub.setAttribute('role', 'status');
+  bub.innerHTML = '<button class="mb-go" type="button"><span class="mb-note">♪</span><span><b>Music is ready</b><small></small></span></button><button class="mb-x" type="button" aria-label="Dismiss">✕</button>';
+  document.body.appendChild(bub);
+  const playing = () => !!(au && !au.paused);
+  function placeBub() { const r = $('#musicBtn').getBoundingClientRect(); bub.style.top = (r.bottom + 14) + 'px'; bub.style.right = Math.max(10, innerWidth - r.right - 6) + 'px'; }
+  function showBub() {
+    if (playing() || store.get('music', true) === false) return;
+    try { if (sessionStorage.getItem('nm-bub')) return; } catch (e) {}
+    bub.querySelector('small').textContent = isX() ? 'Tap here for the Jazz Christmas selection' : 'Tap here for the academy waltz';
+    placeBub(); bub.classList.add('on');
+  }
+  function hideBub(remember) { bub.classList.remove('on'); if (remember) try { sessionStorage.setItem('nm-bub', '1'); } catch (e) {} }
+  bub.querySelector('.mb-go').onclick = e => { e.stopPropagation(); hideBub(true); disarm(); store.set('music', true); const L = list(); play(cur && L.includes(cur) ? cur : L[0]); };
+  bub.querySelector('.mb-x').onclick = e => { e.stopPropagation(); hideBub(true); };
+  addEventListener('resize', () => bub.classList.contains('on') && placeBub());
+  setInterval(() => { if (playing()) hideBub(false); }, 700);
+  setTimeout(showBub, 2600); window.__showBub = showBub;
+})();
+
 st.music = false;
 route();
-(function loop(t) { drawSky(t); if (!reduce) requestAnimationFrame(loop); })(0);
+(function loop(t) { drawSky(t); if (window.__snow) window.__snow(t); if (!reduce) requestAnimationFrame(loop); })(0);
 })();
 </script></body></html>
