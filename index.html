@@ -252,6 +252,14 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
 .cr-sig small{display:block;font-family:var(--body);font-size:11px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;margin-top:2px}
 @media (max-width:900px){.creator{grid-template-columns:1fr;padding:14px;gap:16px}}
 
+/* visit counter */
+.visits{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:45;display:none;align-items:center;gap:8px;
+  padding:7px 12px 7px 10px;border-radius:999px;background:rgba(10,13,26,.82);backdrop-filter:blur(8px);border:1px solid rgba(232,184,74,.35);
+  color:var(--parch);font:600 12px/1 var(--body);letter-spacing:.04em;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.visits.on{display:flex;animation:rise .5s}
+.visits svg{width:16px;height:16px}
+.visits b{font-family:var(--mono);color:var(--gold2);font-size:13px}
+
 /* ---------------- MOBILE LAYER (phones: max-width 760px) ---------------- */
 .bnav,.mfilter,.reels{display:none}
 @media (max-width:760px){
@@ -361,10 +369,12 @@ select,input[type=search]{background:var(--panel);border:1px solid var(--line);c
   .reel .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:0}
 }
 @media (max-width:760px){.creator{margin-top:26px;border-radius:16px}.cr-play span{width:64px;height:64px;font-size:24px}.cr-facts b{font-size:18px}.cr-lines{font-size:14.5px}}
+@media (max-width:760px){.visits{bottom:calc(80px + env(safe-area-inset-bottom,0px));padding:5px 10px 5px 8px;font-size:11px}}
 </style></head><body>
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="fx" aria-hidden="true"></canvas>
 <div class="banner" id="banner"></div>
+<div class="visits" id="visits" title="Visits to this site"><svg viewBox="0 0 64 36" aria-hidden="true"><path d="M2 18 Q32 -8 62 18 Q32 44 2 18Z" fill="#f6ecd0"/><circle cx="32" cy="18" r="10" fill="#e8b84a"/><circle cx="32" cy="18" r="4.5" fill="#0a0806"/></svg><b id="visitN">—</b><span>visits</span></div>
 <div class="app">
 <nav class="top"><div class="in">
   <a class="logo" href="#home">THE NUMEROMANCER<small>GOLD PROFILES · by SSXDE_Dler</small></a>
@@ -832,6 +842,18 @@ addEventListener('keydown', e => { if (!location.hash.startsWith('#spell-') || e
   $('#toCreator').onclick = e => { e.preventDefault(); sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); };
   new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) sec.classList.add('seen'); }), { threshold: .3 }).observe(sec);
   addEventListener('hashchange', () => v.pause());
+})();
+// visit counter (works on the published GitHub site; hidden if the counter service can't be reached)
+(function () {
+  const box = $('#visits'); if (!box || location.protocol === 'file:') return;
+  let first = true; try { first = !sessionStorage.getItem('nm-v'); sessionStorage.setItem('nm-v', '1'); } catch (e) {}
+  const K = 'dler96-gold-profiles', key = 'visits';
+  const srcs = [() => fetch(`https://abacus.jasoncameron.dev/${first ? 'hit' : 'get'}/${K}/${key}`).then(r => r.ok ? r.json() : Promise.reject()).then(j => +j.value),
+                () => fetch(`https://countapi.mileshilliard.com/api/v1/${first ? 'hit' : 'get'}/${K}-${key}`).then(r => r.ok ? r.json() : Promise.reject()).then(j => +j.value)];
+  const show = n => { if (!(n > 0)) return Promise.reject(); const el = $('#visitN'), t0 = performance.now(), from = Math.max(0, n - 40);
+    box.classList.add('on'); const step = now => { const k = Math.min(1, (now - t0) / 1200); el.textContent = Math.round(from + (n - from) * (1 - Math.pow(1 - k, 3))).toLocaleString(); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); };
+  const tryN = i => i < srcs.length && srcs[i]().then(show).catch(() => tryN(i + 1));
+  setTimeout(() => tryN(0), 600);
 })();
 // ---------------------------------------------------------------- MOBILE LAYER
 const mq = matchMedia('(max-width: 760px)'), isM = () => mq.matches;
