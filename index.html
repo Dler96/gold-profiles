@@ -1233,14 +1233,23 @@ function isX() { return document.body.classList.contains('xmas'); }
   const src = tr => U[tr.id] || 'music/' + tr.id + '.mp4';
   let au = null, cur = null, synth = false;
   const list = () => T.filter(tr => isX() ? tr.x : !tr.x);
-  function startSynth() { synth = true; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); mGain = mGain || AC.createGain(); mGain.gain.value = .8; mGain.connect(AC.destination); AC.resume(); clearTimeout(musicTimer); playLoop(); } catch (e) {} }
-  function stopAll() { if (au) au.pause(); clearTimeout(musicTimer); if (AC) AC.suspend(); synth = false; paint(); }
+  let token = 0;
+  function silenceSynth() { clearTimeout(musicTimer); if (AC && AC.state === 'running') AC.suspend(); synth = false; }
+  function startSynth(my) {            // last resort if a track file cannot play at all
+    if (my !== token || synth || !st.music) return;
+    if (au) { au.pause(); au.removeAttribute('src'); au.load(); }
+    synth = true;
+    try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); mGain = mGain || AC.createGain(); mGain.gain.value = .8; mGain.connect(AC.destination); AC.resume(); clearTimeout(musicTimer); playLoop(); } catch (e) {}
+  }
+  function stopAll() { token++; if (au) au.pause(); silenceSynth(); paint(); }
   function play(tr, auto) {
-    if (au) au.pause(); clearTimeout(musicTimer); cur = tr;
-    au = new Audio(src(tr)); au.volume = 0; au.loop = list().length < 2;
-    au.onended = () => { const L = list(), i = L.indexOf(cur); play(L[(i + 1) % L.length]); };
-    au.onerror = () => { if (st.music) startSynth(); };
-    au.play().then(() => { const t0 = performance.now(); const f = n => { const v = Math.max(0, Math.min(1, (n - t0) / 1200)) * .65; au.volume = v; if (v < .65 && !au.paused) requestAnimationFrame(f); }; requestAnimationFrame(f); }).catch(auto ? arm : startSynth);
+    const my = ++token; cur = tr; silenceSynth();
+    if (!au) au = new Audio();            // ONE audio element for the whole site: a new track replaces the old one
+    au.pause(); au.volume = 0; au.loop = list().length < 2; au.src = src(tr);
+    au.onended = () => { if (my !== token) return; const L = list(), i = L.indexOf(cur); play(L[(i + 1) % L.length]); };
+    au.onerror = () => { if (my === token && st.music) startSynth(my); };
+    au.play().then(() => { if (my !== token) return; const t0 = performance.now(); const f = n => { if (my !== token) return; const v = Math.max(0, Math.min(1, (n - t0) / 1200)) * .65; au.volume = v; if (v < .65 && !au.paused) requestAnimationFrame(f); }; requestAnimationFrame(f); })
+      .catch(err => { if (my !== token) return; if (err && err.name === 'NotAllowedError') arm(); else if (!(err && err.name === 'AbortError')) startSynth(my); });
     st.music = true; $('#musicBtn').setAttribute('aria-pressed', true); paint();
   }
   // picker
@@ -1258,7 +1267,7 @@ function isX() { return document.body.classList.contains('xmas'); }
   }
   const place = () => { const r = pick.getBoundingClientRect(); pop.style.top = (r.bottom + 10) + 'px'; pop.style.right = Math.max(10, innerWidth - r.right) + 'px'; };
   pick.onclick = e => { e.stopPropagation(); const o = !pop.classList.contains('open'); pop.classList.toggle('open', o); pick.setAttribute('aria-expanded', o); if (o) { paint(); place(); } };
-  document.addEventListener('click', e => { if (!pop.contains(e.target) && e.target !== pick) { pop.classList.remove('open'); pick.setAttribute('aria-expanded', 'false'); } });
+  document.addEventListener('click', e => { if (!e.composedPath().includes(pop) && e.target !== pick) { pop.classList.remove('open'); pick.setAttribute('aria-expanded', 'false'); } });
   addEventListener('resize', () => pop.classList.contains('open') && place());
   $('#musicBtn').onclick = () => {
     if (st.music) { st.music = false; $('#musicBtn').setAttribute('aria-pressed', false); stopAll(); store.set('music', false); return; }
@@ -1292,6 +1301,7 @@ function isX() { return document.body.classList.contains('xmas'); }
   addEventListener('resize', () => bub.classList.contains('on') && placeBub());
   setInterval(() => { if (playing()) hideBub(false); }, 700);
   setTimeout(showBub, 2600); window.__showBub = showBub;
+  document.addEventListener('play', e => { if (e.target && e.target.tagName === 'VIDEO' && st.music) window.__pauseMusic(); }, true);   // any video (episodes, creator) pauses the music
 })();
 
 st.music = false;
